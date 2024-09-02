@@ -3,18 +3,19 @@ import { colors } from '../../theme';
 
 export default StyleSheet.create({
   container: {
-    height: 52,
+    height: 56,
     flexWrap: 'nowrap',
     flexDirection: 'row',
     backgroundColor: colors.static,
     width: '100%',
     alignItems: 'center',
     padding: 12,
-    borderColor: colors.static,
+    borderRadius: 8,
+    borderColor: colors.borderGreyDark,
     borderWidth: 1,
   },
   disabled: {
-    backgroundColor: colors.greyBG,
+    backgroundColor: colors.borderGrey,
   },
   search: {
     width: 30,
@@ -23,9 +24,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    height: 48,
+    height: 56,
     flex: 1,
-    fontFamily: 'HelveticaNeue',
     textAlignVertical: 'center',
     fontSize: 16,
     color: colors.grey100,
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   focused: {
-    borderColor: colors.primary70,
+    borderColor: colors.borderGreyDark,
     backgroundColor: colors.static,
     fontFamily: 'HelveticaNeue',
     color: colors.grey100,

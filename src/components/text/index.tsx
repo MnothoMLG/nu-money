@@ -6,15 +6,14 @@ interface Props extends TextProps {
   bold?: boolean;
   align?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   xtraBold?: boolean;
-
   thin?: boolean;
   size?: number;
   wrap?: 'nowrap' | 'wrap';
   color?: string;
   ml?: number;
+  fw?: string | number;
   mb?: number;
   mt?: number;
-  fw?: number;
   mr?: number;
   lh?: number;
 }
@@ -28,6 +27,9 @@ export const Text: FC<Props> = ({
   mt,
   ml,
   mr,
+  bold,
+  xtraBold,
+  children,
 }) => (
   <RnText
     style={{
@@ -40,6 +42,9 @@ export const Text: FC<Props> = ({
       marginTop: mt,
       lineHeight: lh || size ? size! * 1.4 : 18.2,
       color: color || colors.grey100,
+      fontWeight: bold ? 'bold' : xtraBold ? '800' : 'normal',
     }}
-  />
+  >
+    {children}
+  </RnText>
 );

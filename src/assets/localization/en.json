@@ -11,11 +11,11 @@
     "home": "Home Loan",
     "apply": "Apply for a loan"
   },
-  "application": {
+  "loans": {
     "purpose": "Loan Purpose",
     "amount": "Loan Amount",
     "max": "Maximum Amount",
-    "interest": "Interest",
+    "interest": "Interest: {0}%",
     "personalLoan": "Personal Loan",
     "homeLoan": "Home Loan"
   }

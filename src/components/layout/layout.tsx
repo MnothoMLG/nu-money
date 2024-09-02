@@ -1,16 +1,9 @@
-import { Platform, SafeAreaView, View, ViewStyle } from 'react-native';
-import styled from 'styled-components/native';
-import React, { ReactNode } from 'react';
-import { colors } from '@theme';
-import { StatusBar } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { IPlatforms } from '@constants/types';
+import { SafeAreaView, View, ViewProps, ViewStyle } from 'react-native';
+import React, { Children, FC, ReactNode } from 'react';
 
-export const Center = styled.View`
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-`;
+export const Center = () => (
+  <View style={{ justifyContent: 'center', alignItems: 'center' }}></View>
+);
 
 type flexAlign =
   | 'flex-start'
@@ -48,38 +41,66 @@ export function Margin({
   );
 }
 
-interface RowProps {
-  marginTop?: number;
-  marginBottom?: number;
-  background?: string;
+interface RowProps extends ViewProps {
+  mt?: number;
+  mb?: number;
+  bg?: string;
   fullWidth?: boolean;
   justify?: flexAlign;
   align?: flexAlign;
   flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
 }
 
-export const Row = styled.View<RowProps>`
-  width: ${({ fullWidth }: RowProps) => (fullWidth ? '100%' : 'auto')};
-  flex-direction: row;
-  margin-top: ${({ marginTop }: RowProps) => marginTop || '0'}px;
-  margin-bottom: ${({ marginBottom }: RowProps) => marginBottom || '0'}px;
-  background-color: ${({ background }: RowProps) =>
-    background || 'transparent'};
-  justify-content: ${({ justify }: RowProps) => justify || 'flex-start'};
-  align-items: ${({ align }: RowProps) => align || 'flex-start'};
-  flex-wrap: ${({ flexWrap }: RowProps) => flexWrap || 'wrap'};
-`;
-
-export const Column = styled.View<RowProps>`
-  width: ${({ fullWidth }: RowProps) => (fullWidth ? '100%' : 'auto')};
-  flex-direction: column;
-  margin-top: ${({ marginTop }: RowProps) => marginTop || '0'}px;
-  margin-bottom: ${({ marginBottom }: RowProps) => marginBottom || '0'}px;
-  background-color: ${({ background }: RowProps) =>
-    background || 'transparent'};
-  justify-content: ${({ justify }: RowProps) => justify || 'flex-start'};
-  align-items: ${({ align }: RowProps) => align || 'flex-start'};
-`;
+export const Row: FC<RowProps> = ({
+  fullWidth,
+  mt,
+  mb,
+  align,
+  justify,
+  bg,
+  children,
+}) => {
+  return (
+    <View
+      style={{
+        width: fullWidth ? '100%' : 'auto',
+        flexDirection: 'row',
+        marginTop: mt,
+        marginBottom: mb,
+        backgroundColor: bg || 'transparent',
+        justifyContent: justify,
+        alignItems: align,
+      }}
+    >
+      {children}
+    </View>
+  );
+};
+export const Column: FC<RowProps> = ({
+  fullWidth,
+  mt,
+  mb,
+  align,
+  justify,
+  bg,
+  children,
+}) => {
+  return (
+    <View
+      style={{
+        width: fullWidth ? '100%' : 'auto',
+        flexDirection: 'column',
+        marginTop: mt,
+        marginBottom: mb,
+        backgroundColor: bg,
+        justifyContent: justify,
+        alignItems: align,
+      }}
+    >
+      {children}
+    </View>
+  );
+};
 
 export function Padding({
   pb,
@@ -111,48 +132,8 @@ export function Padding({
   );
 }
 
-const padding =
-  Platform.OS === IPlatforms.ANDROID ? StatusBar.currentHeight : 0;
-
-export const Container = ({
-  children,
-  padded,
-  light,
-  bg,
-  style,
-  extraScrollHeight = 120,
-}: any) => {
-  return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: light ? colors.static : colors.primary,
-      }}
-    >
-      <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        keyboardShouldPersistTaps='handled'
-        scrollEnabled
-        // scrollToOverflowEnabled
-        style={[
-          {
-            flex: 1,
-            backgroundColor: bg || colors.greyBG,
-            paddingTop: padded ? padding : 0,
-          },
-        ]}
-        extraScrollHeight={extraScrollHeight}
-        contentContainerStyle={style}
-      >
-        <StatusBar
-          animated={true}
-          barStyle={light ? 'dark-content' : 'light-content'}
-          backgroundColor={light ? colors.static : colors.primary}
-        />
-
-        {children}
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
-  );
-};
+export const Footer: FC<ViewProps> = ({ children }) => (
+  <SafeAreaView style={{ position: 'absolute', bottom: 0 }}>
+    {children}
+  </SafeAreaView>
+);

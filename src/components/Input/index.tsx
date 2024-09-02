@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import styles from './Styles';
 import { Text } from '@components/text';
-import { CrossIcon, SearchIcon } from '../../assets';
+import { CrossIcon } from '../../assets';
 import { colors } from '@theme';
 import { useIsFocused } from '@react-navigation/native';
 import { Row } from '@components/layout/layout';
@@ -64,13 +64,13 @@ export const Input = ({
   return (
     <View style={wrapperStyle}>
       {label && (
-        <Row marginBottom={8}>
+        <Row mb={8}>
           <Text
             color={light ? colors.static : colors.grey70}
             style={styles.leftAlign}
             bold
           >
-            {label.toUpperCase()}
+            {label}
           </Text>
           {required && (
             <Text bold style={styles.required}>
@@ -92,17 +92,17 @@ export const Input = ({
           <TouchableOpacity style={styles.search}>{left}</TouchableOpacity>
         )}
         <TextInput
-          placeholderTextColor={colors.grey20}
+          placeholderTextColor={colors.grey}
           style={[
             styles.input,
             centerText && styles.centerText,
-            disabled && { color: colors.grey40 },
+            disabled && { color: colors.grey70 },
             //ToDO: Fix-Me erronus  == struggled getting the bold on and off on errors
           ]}
           ref={searchRef}
           placeholder={props.placeholder || ''}
-          cursorColor={colors.blue}
-          selectionColor={`${colors.blue}A1`}
+          cursorColor={colors.primary}
+          selectionColor={`${colors.primary}A1`}
           editable={!disabled}
           {...props}
           onChangeText={(text: string) => {
@@ -129,11 +129,7 @@ export const Input = ({
             }}
             style={styles.search}
           >
-            {value ? (
-              <CrossIcon width={20} color={colors.grey100} />
-            ) : (
-              <SearchIcon color={colors.grey100} />
-            )}
+            {value ? <CrossIcon width={20} color={colors.grey100} /> : null}
           </TouchableOpacity>
         )}
       </View>

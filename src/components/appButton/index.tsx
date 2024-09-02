@@ -7,18 +7,21 @@ import {
   TouchableOpacityProps,
 } from 'react-native';
 import { colors } from '@theme';
+import { SvgProps } from 'react-native-svg';
+import { EButtonVariants } from '@constants/types';
 
-type variant = 'primary' | 'secondary' | 'tertiary';
 export interface AppButtonProps extends TouchableOpacityProps {
   label?: string;
   fullWidth?: boolean;
   rounded?: boolean;
   loading?: boolean;
-  variant?: variant;
+  variant?: EButtonVariants;
   br?: number;
   bold?: boolean;
   textSize?: number;
   textColor?: string;
+  iconRight?: FC<SvgProps>;
+  iconLeft?: FC<SvgProps>;
 }
 
 export const AppButton: FC<AppButtonProps> = ({
@@ -36,6 +39,8 @@ export const AppButton: FC<AppButtonProps> = ({
   disabled,
   ...props
 }) => {
+  const IconLeft = props.iconLeft;
+  const IconRight = props.iconRight;
   return (
     <TouchableOpacity
       style={[
@@ -45,6 +50,7 @@ export const AppButton: FC<AppButtonProps> = ({
         style,
         { borderRadius: br || 0 },
         disabled ? bodyStyle.disabled : null,
+        props.iconRight && { justifyContent: 'space-between' },
       ]}
       {...props}
       disabled={disabled || loading}
@@ -56,13 +62,39 @@ export const AppButton: FC<AppButtonProps> = ({
         />
       ) : label ? (
         <>
+          {props.iconLeft ? (
+            <IconLeft
+              color={
+                textColor ||
+                (variant === 'primary' ? colors.static : colors.primary)
+              }
+              width={19}
+              height={19}
+              storeWidth={1}
+            />
+          ) : null}
           <Text
-            style={[textStyle[variant], !!textColor && { color: textColor }]}
+            ml={props.iconLeft ? 8 : 0}
+            mr={props.iconRight ? 8 : 0}
+            color={textColor || colors.primary}
+            style={[textStyle[variant]]}
             size={textSize || 16}
             bold={bold}
           >
             {label}
           </Text>
+
+          {props.iconRight ? (
+            <IconRight
+              color={
+                textColor ||
+                (variant === 'primary' ? colors.static : colors.primary)
+              }
+              width={textSize || 19}
+              height={19}
+              storeWidth={1}
+            />
+          ) : null}
         </>
       ) : (
         children
@@ -109,7 +141,6 @@ const bodyStyle = StyleSheet.create({
   fullWidth: {
     width: '100%',
   },
-
   disabled: {
     opacity: 0.5,
     backgroundColor: colors.teal,

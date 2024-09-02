@@ -1,34 +1,61 @@
 import React, { FC } from 'react';
 import { Text } from '../text';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { colors } from '@theme';
+import { AppButton } from '../appButton';
+import { EButtonVariants, ILoan } from '@constants/types';
+import { ArrowRightIcon } from '@assets';
+import { Row } from '../layout/layout';
+import { useTranslation } from '@hooks';
 
-type variant = 'primary' | 'secondary' | 'tertiary';
-export interface AppButtonProps extends TouchableOpacityProps {
-  label?: string;
-  fullWidth?: boolean;
-  rounded?: boolean;
-  loading?: boolean;
-  variant?: variant;
-  br?: number;
-  bold?: boolean;
-  textSize?: number;
-  textColor?: string;
+export interface Props {
+  loan: ILoan;
+  onPress: () => void;
 }
 
-export const LoanCard: FC<AppButtonProps> = () => {
+export const LoanCard: FC<Props> = ({ onPress, loan }) => {
+  const { t } = useTranslation();
+
   return (
-    <TouchableOpacity style={{ borderWidth: 1 }}>
-      <Text>Loan</Text>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
+      <Text size={20} bold>
+        Home Loan
+      </Text>
+
+      <Row justify='space-between' align='flex-end'>
+        <View>
+          <Text>{t('loans.max')}</Text>
+          <Text color={colors.primary} bold size={24}>
+            $500,000
+          </Text>
+          <Text>{t('loans.interest').replace('{0}', '4')}</Text>
+        </View>
+
+        <AppButton
+          br={10}
+          variant={EButtonVariants.SECONDARY}
+          label={t('common.learnMore')}
+          iconRight={ArrowRightIcon}
+          textSize={8}
+          style={styles.learnMore}
+        />
+      </Row>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    borderColor: colors.borderGrey,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 139,
+    padding: 16,
+    paddingBottom: 12,
+    justifyContent: 'space-between',
+  },
+  learnMore: { height: 21 },
+  bg2: {
+    backgroundColor: colors.teal,
+  },
 });
