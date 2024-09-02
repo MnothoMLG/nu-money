@@ -1,0 +1,22 @@
+{
+  "common": {
+    "submit": "Submit",
+    "email": "Email",
+    "fullName": "Full Name",
+    "learnMore": "Learn More"
+  },
+  "dashboard": {
+    "heading": "Loan Application Dashboard",
+    "personal": "Personal Loan",
+    "home": "Home Loan",
+    "apply": "Apply for a loan"
+  },
+  "application": {
+    "purpose": "Loan Purpose",
+    "amount": "Loan Amount",
+    "max": "Maximum Amount",
+    "interest": "Interest",
+    "personalLoan": "Personal Loan",
+    "homeLoan": "Home Loan"
+  }
+}
