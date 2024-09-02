@@ -139,7 +139,7 @@ export const Input = ({
           size={13}
           align='left'
           style={styles.leftAlign}
-          color={colors.primary}
+          color={colors.danger}
         >
           {error}
         </Text>

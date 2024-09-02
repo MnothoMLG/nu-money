@@ -76,8 +76,7 @@ export const AppButton: FC<AppButtonProps> = ({
           <Text
             ml={props.iconLeft ? 8 : 0}
             mr={props.iconRight ? 8 : 0}
-            color={textColor || colors.primary}
-            style={[textStyle[variant]]}
+            color={textStyle[variant]}
             size={textSize || 16}
             bold={bold}
           >
@@ -102,17 +101,11 @@ export const AppButton: FC<AppButtonProps> = ({
     </TouchableOpacity>
   );
 };
-const textStyle = StyleSheet.create({
-  primary: {
-    color: colors.static,
-  },
-  secondary: {
-    color: colors.primary,
-  },
-  tertiary: {
-    color: colors.primary,
-  },
-});
+const textStyle = {
+  primary: colors.static,
+  secondary: colors.primary,
+  tertiary: colors.primary,
+};
 
 const bodyStyle = StyleSheet.create({
   base: {
@@ -143,6 +136,6 @@ const bodyStyle = StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
-    backgroundColor: colors.teal,
+    backgroundColor: colors.primary,
   },
 });

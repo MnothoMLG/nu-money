@@ -6,6 +6,7 @@ export const colors = {
   grey70: '#535353',
   borderGrey: '#D9D9D9',
   success: '#57BD87',
+  danger: '#ed1a1a',
   primary: '#30C2E3',
   teal: '#d5faf5',
   transparent: 'transparent',

@@ -1,5 +1,5 @@
-import { ILoan } from '@constants/types';
+import { ILoanProduct } from '@constants/types';
 
 export interface LoansState {
-  offers: Partial<Array<ILoan>>;
+  loanProducts: Partial<Array<ILoanProduct>>;
 }

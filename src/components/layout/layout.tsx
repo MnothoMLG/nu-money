@@ -1,8 +1,10 @@
 import { SafeAreaView, View, ViewProps, ViewStyle } from 'react-native';
-import React, { Children, FC, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 
-export const Center = () => (
-  <View style={{ justifyContent: 'center', alignItems: 'center' }}></View>
+export const Center: FC<ViewProps> = ({ children }) => (
+  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+    {children}
+  </View>
 );
 
 type flexAlign =

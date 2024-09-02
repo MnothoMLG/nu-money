@@ -2,7 +2,7 @@
   "common": {
     "submit": "Submit",
     "email": "Email",
-    "fullName": "Full Name",
+    "full_name": "Full Name",
     "learnMore": "Learn More"
   },
   "dashboard": {
@@ -18,5 +18,9 @@
     "interest": "Interest: {0}%",
     "personalLoan": "Personal Loan",
     "homeLoan": "Home Loan"
+  },
+  "form": {
+    "email": "yourname@example.com",
+    "amount": "UGX"
   }
 }

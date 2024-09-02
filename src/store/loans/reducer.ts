@@ -1,13 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {
-  fetchLoanOffersRequest,
-  fetchLoanOffersSuccess,
-  fetchLoanOffersError,
-} from './actions';
+import { fetchLoanOffersSuccess } from './actions';
 import { LoansState } from './types';
 
 const INITIAL_STATE: LoansState = {
-  offers: [],
+  loanProducts: [],
 };
 
 export const loansReducer = createReducer(INITIAL_STATE, (builder) => {

@@ -1,6 +1,6 @@
-import React, { FC, useRef } from 'react';
+import React, { FC } from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
-import colors from '@theme/colors';
+import { colors } from '@theme';
 import { Center } from '@components/layout/layout';
 import { Text } from '@components/text';
 import { useTranslation } from '@hooks';
@@ -17,13 +17,12 @@ export const Loader: FC<Props> = ({
   noLoadingText,
 }) => {
   const { t } = useTranslation();
-  const animation = useRef(null);
   return (
     <Center style={styles.wrapper}>
       <ActivityIndicator color={colors.primary} size={size} />
       {!noLoadingText && (
         <Text mt={16} color={colors.grey70}>
-          {loadingText ?? t('locations.wait')}
+          {loadingText ?? t('common.wait')}
         </Text>
       )}
     </Center>
