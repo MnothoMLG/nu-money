@@ -9,7 +9,9 @@ import {
   Margin,
   Center,
   Padding,
-  Row,
+  LoanApplicationCard,
+  Loader,
+  BackButton,
 } from '@components';
 import { useLoading, useTranslation } from '@hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -18,41 +20,46 @@ import { routes } from '@navigation/routes';
 import { GenericMainStackScreenProps } from '@navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  fetchLoanOffersRequest,
-  GET_LOAN_PRODUCTS_LOADING_KEY,
+  fetchLoanApplicationsRequest,
+  GET_LOAN_APPLICATIONS_LOADING_KEY,
 } from '@store/actions';
-import { getAllLoanProducts } from '@store/loans/selectors';
+import { getAllLoanApplications } from '@store/loans/selectors';
 import { showToast } from '@util';
 import { EButtonVariants, EToastTypes } from '@constants/types';
 
-const Dashboard = () => {
+const LoanApplicationsList = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigation =
     useNavigation<GenericMainStackScreenProps<routes.DASHBOARD>>();
-  const loading = useLoading(GET_LOAN_PRODUCTS_LOADING_KEY);
-  const loanProducts = useSelector(getAllLoanProducts);
+  const loading = useLoading(GET_LOAN_APPLICATIONS_LOADING_KEY);
+  const loanApplications = useSelector(getAllLoanApplications);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(fetchLoanOffersRequest());
+      dispatch(fetchLoanApplicationsRequest());
     });
     return unsubscribe;
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <SafeAreaView style={styles.container}>
+      <Margin mt={24} />
+      <BackButton />
       <FlatList
-        data={loanProducts}
+        data={loanApplications}
         ListHeaderComponent={
           <Text size={29} mb={42} xtraBold>
-            {t('dashboard.heading')}
+            {t('loans.prev')}
           </Text>
         }
         style={styles.list}
         contentContainerStyle={styles.items}
         renderItem={({ item }) => (
-          <LoanCard
+          <LoanApplicationCard
             loan={item}
             onPress={() => {
               showToast({
@@ -73,25 +80,13 @@ const Dashboard = () => {
                 label={` ${t('common.refresh')} `}
                 br={5}
                 style={styles.rfrsh}
-                onPress={() => dispatch(fetchLoanOffersRequest())}
+                onPress={() => dispatch(fetchLoanApplicationsRequest())}
                 loading={loading}
               />
             </Center>
           ) : null
         }
         ItemSeparatorComponent={() => <Margin mt={16} />}
-        ListFooterComponent={
-          <Margin mt={40}>
-            <AppButton
-              label={t('dashboard.viewApps')}
-              variant={EButtonVariants.SECONDARY}
-              br={4}
-              onPress={() => {
-                navigation.navigate(routes.APPLICATIONS);
-              }}
-            />
-          </Margin>
-        }
       />
 
       <Footer>
@@ -109,14 +104,13 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default LoanApplicationsList;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.static,
     padding: 24,
-    alignItems: 'center',
   },
   items: {
     paddingBottom: 106,

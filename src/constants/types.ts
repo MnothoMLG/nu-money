@@ -5,14 +5,24 @@ export interface ILoanProduct {
   interestRate: number;
 }
 
-export interface ILoanApplicationPayload {
+export interface ICallBacks {
+  onSuccess?: (msg: string) => void;
+  onFailure?: (reason: string) => void;
+}
+
+export interface ILoanApplicationPayload extends ICallBacks {
   loan_amount: string | number;
   full_name?: string;
   email: string;
   loan_purpose: string;
 }
-export interface ILoanApplication extends ILoanApplicationPayload {
+
+export interface ILoanApplication {
   id: number;
+  fullName: string;
+  email: string;
+  loanAmount: number;
+  loanPurpose: string;
 }
 
 export interface IGenericResponse {

@@ -7,9 +7,13 @@ import {
   applyForLoanRequest,
   applyForLoanSuccess,
   applyForLoanError,
+  fetchLoanApplicationsRequest,
+  fetchLoanApplicationsSuccess,
+  fetchLoanApplicationsError,
 } from './actions';
 import {
   EToastTypes,
+  ILoanApplication,
   ILoanApplicationPayload,
   ILoanProduct,
 } from '@constants/types';
@@ -17,8 +21,8 @@ import { client } from '@api';
 import {
   APPLY_FOR_LOAN_PATH,
   FETCH_ALL_PATH,
+  getLoanApplicationsQuery,
   getLoanProducts,
-  sendLoanApplicationQuery,
 } from '@api/queries';
 import { showToast } from '@util';
 
@@ -44,34 +48,65 @@ export function* fetchAllLoanOffers({}: { type: string }) {
   }
 }
 
+export function* fetchAllLoanApplications({}: { type: string }) {
+  try {
+    const response: AxiosResponse<{
+      data: { loanApplications: ILoanApplication[] };
+    }> = yield call(() =>
+      client.post(FETCH_ALL_PATH, { query: getLoanApplicationsQuery })
+    );
+
+    console.log('All applications ====> ', { response });
+
+    yield delay(2000); //so you see loaders :]
+    yield put(
+      fetchLoanApplicationsSuccess({
+        ...response.data.data,
+      })
+    );
+  } catch (err) {
+    showToast({
+      type: EToastTypes.ERROR,
+      message: 'An error occurred fetching product data',
+    });
+    yield put(
+      fetchLoanApplicationsError({
+        err: 'An error occured getting products data',
+      })
+    );
+  }
+}
+
 export function* applyForLoan({
   payload,
 }: {
   type: string;
   payload: ILoanApplicationPayload;
 }) {
+  const { onSuccess, onFailure, ...rest } = payload;
   try {
     __DEV__ && console.log("let's try apply  ====>", { payload });
-    const response: AxiosResponse<{ data: { loanProducts: ILoanProduct[] } }> =
-      yield call(() =>
-        client.post(APPLY_FOR_LOAN_PATH, { query: sendLoanApplicationQuery })
-      );
+    const response: AxiosResponse<{ message: string }> = yield call(() =>
+      client.post(APPLY_FOR_LOAN_PATH, { ...rest })
+    );
 
     __DEV__ &&
       console.log('APPLICSTION response ====>', JSON.stringify({ response }));
+    yield delay(2000); //no need = just for loaders
     yield put(applyForLoanSuccess());
+    onSuccess?.(response.data.message);
   } catch (err) {
     showToast({
       type: EToastTypes.ERROR,
       message: 'An error occurred processing your application',
     });
-
-    __DEV__ && console.log('Application error ', JSON.stringify({ err }));
     yield put(applyForLoanError({ err: 'An error occured.' }));
+    onFailure?.('An error occurred processing your application');
   }
 }
 
 export function* watchProductsSagas() {
+  yield takeLatest(fetchLoanApplicationsRequest.type, fetchAllLoanApplications);
   yield takeLatest(applyForLoanRequest.type, applyForLoan);
   yield takeLatest(fetchLoanOffersRequest.type, fetchAllLoanOffers);
 }

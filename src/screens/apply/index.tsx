@@ -3,7 +3,14 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Formik } from 'formik';
 import { colors } from '@theme';
-import { AppButton, Input, Text, Margin, Padding } from '@components';
+import {
+  AppButton,
+  Input,
+  Text,
+  Margin,
+  Padding,
+  BackButton,
+} from '@components';
 import { applicationFormValidation } from '@util/validation';
 import { useLoading, useTranslation } from '@hooks';
 import {
@@ -11,20 +18,29 @@ import {
   applyForLoanRequest,
 } from '@store/actions';
 import { useDispatch } from 'react-redux';
-import { EButtonVariants, ILoanApplicationPayload } from '@constants/types';
-import { ArrowRightIcon } from '@assets/icons';
+import { ILoanApplicationPayload } from '@constants/types';
 import { useNavigation } from '@react-navigation/native';
+import { routes } from '@navigation/routes';
+import { GenericMainStackScreenProps } from '@navigation/types';
 
 const ApplyForALoan = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<GenericMainStackScreenProps<routes.APPLY>>();
   const loading = useLoading(APPLY_FOR_LOAN_LOADING_KEY);
 
   const submitLoadApplication = (values: ILoanApplicationPayload) => {
-    dispatch(applyForLoanRequest({ ...values }));
+    dispatch(
+      applyForLoanRequest({
+        ...values,
+        onSuccess: (message: string) => {
+          navigation.navigate(routes.CONFIRMATION, { message });
+        },
+      })
+    );
   };
 
+  // Todo: generic object for input
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
@@ -35,16 +51,7 @@ const ApplyForALoan = () => {
         extraScrollHeight={30}
         contentContainerStyle={styles.container}
       >
-        <AppButton
-          br={20}
-          onPress={() => {
-            navigation.canGoBack() && navigation.goBack();
-          }}
-          variant={EButtonVariants.SECONDARY}
-          style={styles.back}
-        >
-          <ArrowRightIcon width={30} height={12} color={colors.black} />
-        </AppButton>
+        <BackButton />
 
         <Text ml={24} mt={36} bold size={32}>
           {t('dashboard.apply')}
@@ -68,6 +75,7 @@ const ApplyForALoan = () => {
                 value={values.full_name}
                 error={errors.full_name}
                 onChangeText={handleChange('full_name')}
+                disabled={loading}
               />
               <Margin mb={16} />
               <Input
@@ -77,15 +85,17 @@ const ApplyForALoan = () => {
                 error={errors.email}
                 keyboardType='email-address'
                 onChangeText={handleChange('email')}
+                disabled={loading}
               />
               <Margin mb={16} />
               <Input
                 label={t('loans.amount')}
                 placeholder={t('form.amount')}
                 value={values.loan_amount}
+                onChangeText={handleChange('loan_amount')}
                 keyboardType='number-pad'
                 error={errors.loan_amount}
-                onChangeText={handleChange('loan_amount')}
+                disabled={loading}
               />
               <Margin mb={16} />
 
@@ -95,6 +105,7 @@ const ApplyForALoan = () => {
                 value={values.loan_purpose}
                 error={errors.loan_purpose}
                 onChangeText={handleChange('loan_purpose')}
+                disabled={loading}
               />
 
               <Margin mb={56} />
@@ -123,11 +134,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.static,
     flex: 1,
-  },
-  back: {
-    marginHorizontal: 24,
-    width: 40,
-    height: 40,
-    transform: [{ rotate: '180deg' }],
   },
 });

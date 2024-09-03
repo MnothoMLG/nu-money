@@ -6,21 +6,26 @@
     "learnMore": "Learn More",
     "refresh": "Refresh",
     "noResults": "Looks a bit empty here",
-    "wait": "Please wait..."
+    "wait": "Please wait...",
+    "Ok": "Proceed"
   },
   "dashboard": {
     "heading": "Loan Application Dashboard",
     "personal": "Personal Loan",
     "home": "Home Loan",
-    "apply": "Apply for a loan"
+    "apply": "Apply for a loan",
+    "viewApps": "View applications"
   },
   "loans": {
     "purpose": "Loan Purpose",
-    "amount": "Loan Amount",
+    "amount": "Loan amount",
     "max": "Maximum Amount",
     "interest": "Interest: {0}%",
+    "success": "Application successful",
     "personalLoan": "Personal Loan",
-    "homeLoan": "Home Loan"
+    "homeLoan": "Home Loan",
+    "prev": "Previous Applications",
+    "for": "Loan for: {0}"
   },
   "form": {
     "email": "yourname@example.com",
