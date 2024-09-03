@@ -27,8 +27,10 @@ const sendLoanApplicationQuery = `
         message
     }
     `;
+
 const FETCH_ALL_PATH = '/graphql';
 const APPLY_FOR_LOAN_PATH = '/apply-loan';
+
 export {
   FETCH_ALL_PATH,
   APPLY_FOR_LOAN_PATH,

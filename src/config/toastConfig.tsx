@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   errorContainer: {
-    borderLeftColor: colors.primary,
+    borderLeftColor: colors.danger,
     backgroundColor: colors.static,
     alignSelf: 'center',
     justifyContent: 'center',

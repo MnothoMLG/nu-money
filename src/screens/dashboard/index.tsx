@@ -65,7 +65,14 @@ const Dashboard = () => {
         )}
         ListEmptyComponent={
           <Center>
-            <Text>Looks a bit empty</Text>
+            <Text mt={36} mb={12}>
+              {t('common.noResults')}
+            </Text>
+            <AppButton
+              label={t('common.refresh')}
+              onPress={() => dispatch(fetchLoanOffersRequest())}
+              loading={loading}
+            />
           </Center>
         }
         ItemSeparatorComponent={() => <Margin mt={16} />}

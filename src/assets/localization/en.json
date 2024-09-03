@@ -3,7 +3,9 @@
     "submit": "Submit",
     "email": "Email",
     "full_name": "Full Name",
-    "learnMore": "Learn More"
+    "learnMore": "Learn More",
+    "refresh": "Refresh",
+    "noResults": "Looks a bit empty here"
   },
   "dashboard": {
     "heading": "Loan Application Dashboard",
