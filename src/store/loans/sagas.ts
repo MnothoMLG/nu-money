@@ -56,8 +56,6 @@ export function* fetchAllLoanApplications({}: { type: string }) {
       client.post(FETCH_ALL_PATH, { query: getLoanApplicationsQuery })
     );
 
-    console.log('All applications ====> ', { response });
-
     yield delay(2000); //so you see loaders :]
     yield put(
       fetchLoanApplicationsSuccess({
@@ -85,13 +83,10 @@ export function* applyForLoan({
 }) {
   const { onSuccess, onFailure, ...rest } = payload;
   try {
-    __DEV__ && console.log("let's try apply  ====>", { payload });
     const response: AxiosResponse<{ message: string }> = yield call(() =>
       client.post(APPLY_FOR_LOAN_PATH, { ...rest })
     );
 
-    __DEV__ &&
-      console.log('APPLICSTION response ====>', JSON.stringify({ response }));
     yield delay(2000); //no need = just for loaders
     yield put(applyForLoanSuccess());
     onSuccess?.(response.data.message);

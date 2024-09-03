@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { colors } from '@theme';
-import { AppButton } from '@components';
+import { AppButton } from '../appButton';
 import { EButtonVariants } from '@constants/types';
 import { ArrowRightIcon } from '@assets/icons';
 import { useNavigation } from '@react-navigation/native';
