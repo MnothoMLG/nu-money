@@ -1,4 +1,5 @@
 import { SafeAreaView, View, ViewProps, ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, { FC, ReactNode } from 'react';
 
 export const Center: FC<ViewProps> = ({ children }) => (
@@ -134,8 +135,19 @@ export function Padding({
   );
 }
 
-export const Footer: FC<ViewProps> = ({ children }) => (
-  <SafeAreaView style={{ position: 'absolute', bottom: 0 }}>
-    {children}
-  </SafeAreaView>
-);
+export const Footer: FC<ViewProps> = ({ children }) => {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <SafeAreaView
+      style={{
+        position: 'absolute',
+        width: '100%',
+        bottom: insets.bottom,
+        padding: 20,
+      }}
+    >
+      {children}
+    </SafeAreaView>
+  );
+};

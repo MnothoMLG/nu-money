@@ -19,8 +19,20 @@ export interface IGenericResponse {
   message: string;
 }
 
+export enum EToastTypes {
+  ERROR = 'error',
+  SUCCESS = 'success',
+}
+
 export enum EButtonVariants {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   TERTIARY = 'tertiary',
+}
+
+export interface ToastConfig {
+  type: EToastTypes;
+  message: string;
+  description?: string;
+  topOffset?: number;
 }

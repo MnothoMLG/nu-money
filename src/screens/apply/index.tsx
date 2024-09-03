@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Formik } from 'formik';
 import { colors } from '@theme';
 import { AppButton, Input, Text, Margin, Padding } from '@components';
@@ -23,8 +23,14 @@ const ApplyForALoan = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Keyboard aware scroll */}
+    <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+      keyboardShouldPersistTaps='handled'
+      scrollEnabled
+      extraScrollHeight={30}
+      contentContainerStyle={styles.container}
+    >
       <Text ml={24} mt={36} bold size={32}>
         {t('dashboard.apply')}
       </Text>
@@ -91,7 +97,7 @@ const ApplyForALoan = () => {
           </Padding>
         )}
       </Formik>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 

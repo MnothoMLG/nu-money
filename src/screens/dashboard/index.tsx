@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import { colors } from '@theme';
 import {
   Footer,
@@ -9,6 +9,7 @@ import {
   Margin,
   Loader,
   Center,
+  Padding,
 } from '@components';
 import { useLoading, useTranslation } from '@hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +22,8 @@ import {
   GET_LOAN_PRODUCTS_LOADING_KEY,
 } from '@store/actions';
 import { getAllLoanProducts } from '@store/loans/selectors';
+import { showToast } from '@util';
+import { EToastTypes } from '@constants/types';
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -52,7 +55,11 @@ const Dashboard = () => {
           <LoanCard
             loan={item}
             onPress={() => {
-              navigation.navigate(routes.APPLY);
+              showToast({
+                type: EToastTypes.SUCCESS,
+
+                message: 'Coming soon :]',
+              });
             }}
           />
         )}
@@ -64,8 +71,16 @@ const Dashboard = () => {
         ItemSeparatorComponent={() => <Margin mt={16} />}
       />
 
-      <Footer style={{ backgroundColor: 'red', height: 30, paddingBottom: 40 }}>
-        <AppButton fullWidth label={t('dashboard.apply').toLocaleUpperCase()} />
+      <Footer>
+        <Padding pl={24} pr={24}>
+          <AppButton
+            onPress={() => {
+              navigation.navigate(routes.APPLY);
+            }}
+            br={10}
+            label={t('dashboard.apply').toLocaleUpperCase()}
+          />
+        </Padding>
       </Footer>
     </SafeAreaView>
   );

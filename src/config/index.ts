@@ -1,3 +1,4 @@
+export * from './toastConfig';
 export const noHeader = {
   options: {
     header: undefined,
