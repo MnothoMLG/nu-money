@@ -5,7 +5,8 @@
     "full_name": "Full Name",
     "learnMore": "Learn More",
     "refresh": "Refresh",
-    "noResults": "Looks a bit empty here"
+    "noResults": "Looks a bit empty here",
+    "wait": "Please wait..."
   },
   "dashboard": {
     "heading": "Loan Application Dashboard",

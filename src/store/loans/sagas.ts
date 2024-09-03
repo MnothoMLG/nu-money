@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put, call, delay } from 'redux-saga/effects';
 import {
   fetchLoanOffersRequest,
   fetchLoanOffersSuccess,
@@ -24,11 +24,10 @@ import { showToast } from '@util';
 
 export function* fetchAllLoanOffers({}: { type: string }) {
   try {
-    console.log("let's try get these ====>");
     const response: AxiosResponse<{ data: { loanProducts: ILoanProduct[] } }> =
       yield call(() => client.post(FETCH_ALL_PATH, { query: getLoanProducts }));
 
-    console.log('fetch response ====>', JSON.stringify({ response }));
+    yield delay(2000); //so you see loaders :]
     yield put(
       fetchLoanOffersSuccess({
         ...response.data.data,
@@ -52,13 +51,14 @@ export function* applyForLoan({
   payload: ILoanApplicationPayload;
 }) {
   try {
-    console.log("let's try apply  ====>", { payload });
+    __DEV__ && console.log("let's try apply  ====>", { payload });
     const response: AxiosResponse<{ data: { loanProducts: ILoanProduct[] } }> =
       yield call(() =>
         client.post(APPLY_FOR_LOAN_PATH, { query: sendLoanApplicationQuery })
       );
 
-    console.log('APPLICSTION response ====>', JSON.stringify({ response }));
+    __DEV__ &&
+      console.log('APPLICSTION response ====>', JSON.stringify({ response }));
     yield put(applyForLoanSuccess());
   } catch (err) {
     showToast({
@@ -66,7 +66,7 @@ export function* applyForLoan({
       message: 'An error occurred processing your application',
     });
 
-    console.log('Application error ', JSON.stringify({ err }));
+    __DEV__ && console.log('Application error ', JSON.stringify({ err }));
     yield put(applyForLoanError({ err: 'An error occured.' }));
   }
 }

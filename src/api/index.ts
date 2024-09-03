@@ -1,7 +1,5 @@
 import axios from 'axios';
-const graphqlEndpoint = '/graphql';
 
 export const client = axios.create({
-  //ToDo;  use dotenv
-  baseURL: 'http://localhost:5000',
+  baseURL: process.env.BASE_URL || 'http://localhost:5000',
 });

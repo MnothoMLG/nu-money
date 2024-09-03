@@ -2,8 +2,8 @@ import { SafeAreaView, View, ViewProps, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, { FC, ReactNode } from 'react';
 
-export const Center: FC<ViewProps> = ({ children }) => (
-  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+export const Center: FC<ViewProps> = ({ children, style }) => (
+  <View style={[{ justifyContent: 'center', alignItems: 'center' }, style]}>
     {children}
   </View>
 );

@@ -21,7 +21,7 @@ export const LoadingOverlay: FC<unknown> = () => {
       <Center style={styles.wrapper}>
         <ActivityIndicator color={colors.primary} size='large' />
 
-        <Text color={colors.static}>{t('locations.wait')}</Text>
+        <Text color={colors.static}>{t('common.wait')}</Text>
       </Center>
     </Modal>
   );
@@ -32,5 +32,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     backgroundColor: `${colors.dark}A1`,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

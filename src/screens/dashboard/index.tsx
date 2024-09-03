@@ -7,7 +7,6 @@ import {
   AppButton,
   LoanCard,
   Margin,
-  Loader,
   Center,
   Padding,
 } from '@components';
@@ -23,7 +22,7 @@ import {
 } from '@store/actions';
 import { getAllLoanProducts } from '@store/loans/selectors';
 import { showToast } from '@util';
-import { EToastTypes } from '@constants/types';
+import { EButtonVariants, EToastTypes } from '@constants/types';
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -33,14 +32,10 @@ const Dashboard = () => {
   const loading = useLoading(GET_LOAN_PRODUCTS_LOADING_KEY);
   const loanProducts = useSelector(getAllLoanProducts);
 
-  console.log({ loanProducts });
   useEffect(() => {
     dispatch(fetchLoanOffersRequest());
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -57,7 +52,6 @@ const Dashboard = () => {
             onPress={() => {
               showToast({
                 type: EToastTypes.SUCCESS,
-
                 message: 'Coming soon :]',
               });
             }}
@@ -69,7 +63,10 @@ const Dashboard = () => {
               {t('common.noResults')}
             </Text>
             <AppButton
-              label={t('common.refresh')}
+              variant={EButtonVariants.SECONDARY}
+              label={` ${t('common.refresh')} `}
+              br={5}
+              style={styles.rfrsh}
               onPress={() => dispatch(fetchLoanOffersRequest())}
               loading={loading}
             />
@@ -102,5 +99,6 @@ const styles = StyleSheet.create({
     padding: 24,
     alignItems: 'center',
   },
+  rfrsh: { width: 90 },
   list: { padding: 24, width: '100%' },
 });
