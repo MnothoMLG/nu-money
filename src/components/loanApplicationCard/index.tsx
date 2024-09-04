@@ -1,21 +1,29 @@
 import React, { FC } from 'react';
 import { Text } from '../text';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { colors } from '@theme';
 import { ILoanApplication } from '@constants/types';
 import { Row } from '../layout/layout';
 import { useTranslation } from '@hooks';
+import { AnimatedButton } from '..';
 
 export interface Props {
   loan: ILoanApplication;
+  index: number;
   onPress: () => void;
 }
 
-export const LoanApplicationCard: FC<Props> = ({ onPress, loan }) => {
+export const LoanApplicationCard: FC<Props> = ({ onPress, loan, index }) => {
   const { t } = useTranslation();
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <AnimatedButton
+      animation={'fadeInUp'}
+      delay={index * 100}
+      disabled
+      onPress={onPress}
+      style={styles.container}
+    >
       <Text size={20} bold>
         {loan?.fullName}
       </Text>
@@ -29,7 +37,7 @@ export const LoanApplicationCard: FC<Props> = ({ onPress, loan }) => {
           <Text>{t('loans.for').replace('{0}', `${loan?.loanPurpose}`)}</Text>
         </View>
       </Row>
-    </TouchableOpacity>
+    </AnimatedButton>
   );
 };
 

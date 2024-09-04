@@ -7,17 +7,24 @@ import { EButtonVariants, ILoanProduct } from '@constants/types';
 import { ArrowRightIcon } from '@assets';
 import { Row } from '../layout/layout';
 import { useTranslation } from '@hooks';
+import { AnimatedButton } from '..';
 
 export interface Props {
   loan: ILoanProduct;
+  index: number;
   onPress: () => void;
 }
 
-export const LoanCard: FC<Props> = ({ onPress, loan }) => {
+export const LoanCard: FC<Props> = ({ onPress, loan, index }) => {
   const { t } = useTranslation();
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <AnimatedButton
+      animation={'fadeInUp'}
+      delay={index * 100}
+      onPress={onPress}
+      style={styles.container}
+    >
       <Text size={20} bold>
         {loan?.name}
       </Text>
@@ -42,7 +49,7 @@ export const LoanCard: FC<Props> = ({ onPress, loan }) => {
           style={styles.learnMore}
         />
       </Row>
-    </TouchableOpacity>
+    </AnimatedButton>
   );
 };
 

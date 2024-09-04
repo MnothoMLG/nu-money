@@ -5,7 +5,6 @@ import {
   Footer,
   Text,
   AppButton,
-  LoanCard,
   Margin,
   Center,
   Padding,
@@ -15,7 +14,6 @@ import {
 } from '@components';
 import { useLoading, useTranslation } from '@hooks';
 import { useNavigation } from '@react-navigation/native';
-
 import { routes } from '@navigation/routes';
 import { GenericMainStackScreenProps } from '@navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,8 +56,9 @@ const LoanApplicationsList = () => {
         }
         style={styles.list}
         contentContainerStyle={styles.items}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <LoanApplicationCard
+            index={index}
             loan={item}
             onPress={() => {
               showToast({
